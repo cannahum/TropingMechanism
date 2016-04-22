@@ -32,12 +32,13 @@ for media_category, media_details in zip(category_list, soup.find_all("div", cla
             #the following if condition makes sure that we only get media titles and not links to other tropes
             if link.get('href').startswith('http://tvtropes.org') and not link.get('href').startswith('http://tvtropes.org/pmwiki/pmwiki.php/Main'):
                 page_data[media_category][link.get_text()] = link.get('href')
+        # the exceptions cover some cases where there's an a with no href
         except TypeError:
             continue
         except AttributeError:
             continue
 
-# Use the following three lines to preview output
+# Use the following three lines to preview output with prettyprint
 # import pprint
 # pp = pprint.PrettyPrinter(indent=4)
 # pp.pprint(page_data)
