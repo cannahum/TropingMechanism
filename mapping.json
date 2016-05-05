@@ -1,0 +1,17 @@
+{"mappings":{
+	"item": {
+		"properties": {
+			"title": {
+				"type": "string",
+				"analyzer": "standard",
+				"index_options": "offsets"
+				},
+			"text": {
+				"type": "string",
+				"analyzer": "snowball",
+				"index_options": "offsets"
+			}
+		}
+	}
+}
+}
