@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup, SoupStrainer
 import lxml
 import requests
+import re
+import pprint
 
 def run_media_scraper(my_url):
 
@@ -20,6 +22,9 @@ def run_media_scraper(my_url):
 
         #indicating if this is a trope or media link
         page_data["type"] = "media"
+
+        #indicating the type of media of this link
+        page_data["mediatype"] = re.search(r"(?<=http://tvtropes.org/pmwiki/pmwiki.php/)[A-Za-z]+", url).group(0)
 
         #creates list of categories
         category_list = []
@@ -44,8 +49,6 @@ def run_media_scraper(my_url):
         return page_data
 
 if __name__=="__main__":
-    import pprint
-    
     page_data = run_media_scraper('http://tvtropes.org/pmwiki/pmwiki.php/Literature/HarryPotter')    # Use the following three lines to preview output with prettyprint
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(page_data)

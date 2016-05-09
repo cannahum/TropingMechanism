@@ -4,12 +4,14 @@ from media_scraper import run_media_scraper
 import pprint
 import json
 
+
     
 pp = pprint.PrettyPrinter(indent=4)
 url = 'http://tvtropes.org/pmwiki/pmwiki.php/Main/SignificantGreenEyedRedhead'
 
 corpus = {}
 queue = [ ['t', url] ]  #queue of urls to examine
+mediatypeRE = re.compile
 
 ext_count = 0
 for i in range(1000):
