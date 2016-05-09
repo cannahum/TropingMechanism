@@ -1,0 +1,18 @@
+{"id":
+	{"text": "",
+	 "type", "trope",
+	 "links": {"Webcomics": {"title-of-work": "link-",...},
+		   "Literature": {}
+		  },
+	 "title": ""
+	},
+ "id2":
+	{"text": "",
+	 "type": "media",
+	 "tropes": {"trope-name": "link-",... },
+	 "title": ""
+	},
+...
+}
+
+
