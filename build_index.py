@@ -1,3 +1,5 @@
+__author__ = 'Tiffany Chen'
+
 from elasticsearch import Elasticsearch, helpers
 import sys
 import json
