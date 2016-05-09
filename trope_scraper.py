@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup, SoupStrainer
 import lxml
 import requests
 
-def run_scraper(my_url):
+def run_trope_scraper(my_url):
 
     try:
         url = my_url
@@ -22,6 +22,8 @@ def run_scraper(my_url):
         #indicating if this is a trope or media link
         page_data["type"] = "trope"
 
+        #subdict for links to media
+        page_data["links"] = {}
         #creates list of categories
         category_list = []
         for media_category in soup.find_all("div", class_="folderlabel", ):
@@ -31,13 +33,13 @@ def run_scraper(my_url):
         # Makes a dictionary mapping each media category to a dictionary mapping titles to URLs
         # {category: {title: URL, title2: URL2}
         for media_category, media_details in zip(category_list, soup.find_all("div", class_="folder")):
-            page_data[media_category] = {}
+            page_data["links"][media_category] = {}
             for list_item in media_details.find_all('li'):
                 try:
                     link = list_item.find('a')
                     #the following if condition makes sure that we only get media titles and not links to other tropes
                     if link.get('href').startswith('http://tvtropes.org') and not link.get('href').startswith('http://tvtropes.org/pmwiki/pmwiki.php/Main'):
-                        page_data[media_category][link.get_text().replace(".", "")] = link.get('href')
+                        page_data["links"][media_category][link.get_text().replace(".", "")] = link.get('href')
                 # the exceptions cover some cases where there's an a with no href
                 except TypeError:
                     continue
@@ -52,6 +54,6 @@ def run_scraper(my_url):
 if __name__=="__main__":
     import pprint
     
-    page_data = run_scraper('http://tvtropes.org/pmwiki/pmwiki.php/Main/SignificantGreenEyedRedhead')    # Use the following three lines to preview output with prettyprint
+    page_data = run_trope_scraper('http://tvtropes.org/pmwiki/pmwiki.php/Main/SignificantGreenEyedRedhead')    # Use the following three lines to preview output with prettyprint
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(page_data)

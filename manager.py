@@ -1,5 +1,5 @@
 __author__ = 'vladimirsusaya'
-from scraper import run_scraper
+from trope_scraper import run_trope_scraper
 from media_scraper import run_media_scraper
 import pprint
 import json
@@ -19,7 +19,7 @@ for i in range(1000):
 	#try:
 	if url[0] == 't':
 		#insert scraper data into the corpus
-		page_data = run_scraper(url[1])
+		page_data = run_trope_scraper(url[1])
 
 		if page_data is None:
 			continue
