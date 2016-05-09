@@ -4,6 +4,7 @@ from media_scraper import run_media_scraper
 import pprint
 import json
 import re
+import simplejson
 
     
 pp = pprint.PrettyPrinter(indent=4)
@@ -24,7 +25,7 @@ exception_ctr_t = 0
 exception_ctr_m = 0
 
 ext_count = 0
-for i in range(100):
+for i in range(1000):
 	ext_count += 1
 	url = queue.pop(0)
 
@@ -80,6 +81,14 @@ for i in range(100):
 json_data = json.dumps(corpus)
 f = open('corpus.json', 'w')
 f.write(json_data)
+
+#links that failed
+#ft = open('failed_t.txt', 'w')
+#simplejson.dump(failed_tropes, ft)
+#ft.close()
+#fm = open('failed_m.txt', 'w')
+#simplejson.dump(failed_media, fm)
+#fm.close()
 
 #useful information
 print "links examined:"
