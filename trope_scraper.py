@@ -2,6 +2,7 @@ __author__ = 'hannahprovenza'
 from bs4 import BeautifulSoup, SoupStrainer
 import lxml
 import requests
+import pprint
 
 def run_trope_scraper(my_url):
 
@@ -52,8 +53,7 @@ def run_trope_scraper(my_url):
         return None
 
 if __name__=="__main__":
-    import pprint
-    
+
     page_data = run_trope_scraper('http://tvtropes.org/pmwiki/pmwiki.php/Main/SignificantGreenEyedRedhead')    # Use the following three lines to preview output with prettyprint
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(page_data)

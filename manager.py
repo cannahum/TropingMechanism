@@ -25,11 +25,10 @@ for i in range(1000):
 			continue
 
 		corpus[str(i)] = page_data
-		#print page_data
 
 		try:
 			#get the links and put them into the queue
-			links = page_data[unicode('Literature', "utf-8")]
+			links = page_data["links"][unicode('Literature', "utf-8")]
 			for key in links:
 				queue.append(['m', links[key]])
 				break
@@ -37,7 +36,7 @@ for i in range(1000):
 			continue
 
 	else:
-		#insert scraper data into the corpus
+		#insert scraper data into git the corpus
 		page_data = run_media_scraper(url[1])
 
 		if page_data is None:
@@ -61,7 +60,7 @@ json_data = json.dumps(corpus)
 f = open('corpus.json', 'w')
 f.write(json_data)
 
-print ext_count
-print len(corpus.keys())
+print (ext_count)
+print (len(corpus.keys()))
 #pp.pprint(corpus)
 #pp.pprint(page_data)
