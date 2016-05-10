@@ -21,7 +21,7 @@ def run_media_scraper(my_url):
         page_data["title"] = soup.title.string
 
         #indicating if this is a trope or media link
-        page_data["type"] = "media"
+        page_data["doctype"] = "media"
 
         #indicating the type of media of this link
         page_data["mediatype"] = re.search(r"(?<=http://tvtropes.org/pmwiki/pmwiki.php/)[A-Za-z]+", url).group(0)

@@ -1,17 +1,43 @@
-{"mappings":{
-	"item": {
-		"properties": {
-			"title": {
-				"type": "string",
-				"analyzer": "standard",
-				"index_options": "offsets"
+{
+	"mappings":{
+		"item":{
+			"properties":{
+				"text":{
+					"type": "string",
+					"analyzer": "snowball",
+					"index_options": "offsets"
 				},
-			"text": {
-				"type": "string",
-				"analyzer": "snowball",
-				"index_options": "offsets"
+				"doctype":{
+					"type":"string"
+				},
+				"title":{
+					"type": "string",
+					"analyzer": "standard",
+					"index_options": "offsets"
+				},
+				"links":{
+					"properties": {
+						"genre":{
+							"properties":{
+								"title-of-work":{
+									"type" : "string"
+								}
+							}
+							
+						}
+					}
+				},
+				"tropes":{
+					"properties": {
+						"tropename":{
+							"type" : "string"
+						}
+					}
+				}
 			}
 		}
 	}
 }
-}
+	
+	
+	

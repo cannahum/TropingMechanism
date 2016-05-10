@@ -21,7 +21,7 @@ def run_trope_scraper(my_url):
         page_data["title"] = soup.title.string
 
         #indicating if this is a trope or media link
-        page_data["type"] = "trope"
+        page_data["doctype"] = "trope"
 
         #subdict for links to media
         page_data["links"] = {}
