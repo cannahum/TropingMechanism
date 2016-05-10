@@ -3,21 +3,26 @@ from trope_scraper import run_trope_scraper
 from media_scraper import run_media_scraper
 import pprint
 import json
-<<<<<<< HEAD
 import shelve
 import simplejson
+
+CTR = 1000
 
 pp = pprint.PrettyPrinter(indent=4)
 url = 'http://tvtropes.org/pmwiki/pmwiki.php/Main/SignificantGreenEyedRedhead'
 
-# corpus = {}
+corpus = {}
 queue = [ ['t', url] ]  #queue of urls to examine
 
-corpus = shelve.open("corpusfile")
+#corpus = shelve.open("corpusfile")
 
 #check for duplicate links
 examined_tropes = [url]
 examined_media = []
+
+#try to balance media and tropes
+consecutive_tropes = 0
+consecutive_media = 0
 
 #check which links failed
 failed_tropes = []
@@ -26,12 +31,30 @@ exception_ctr_t = 0
 exception_ctr_m = 0
 
 ext_count = 0
-for i in range(10):
+link_count = 0
+
+trope_ctr = 0
+media_ctr = 0
+
+i = 0
+while i < CTR: 
+	i += 1
+#for i in range(1000):
 	ext_count += 1
 	url = queue.pop(0)
 
 	#try:
 	if url[0] == 't':
+
+		if consecutive_tropes > 200:
+			queue.append(url)
+			CTR += 1
+			continue
+
+		consecutive_tropes += 1
+		consecutive_media = 0
+		link_count += 1
+
 		print("Trope")
 		#insert scraper data into the corpus
 		#scrapers return None value if it fails
@@ -42,6 +65,7 @@ for i in range(10):
 			continue
 
 		corpus[str(i)] = page_data
+		trope_ctr += 1
 
 		try:
 			#get the links and put them into the queue
@@ -56,6 +80,16 @@ for i in range(10):
 			continue
 
 	else:
+
+		if consecutive_media > 200:
+			queue.append(url)
+			CTR += 1
+			continue
+
+		consecutive_media += 1
+		consecutive_tropes = 0
+		link_count += 1
+
 		print("Media")
 		#insert scraper data into git the corpus
 		page_data = run_media_scraper(url[1])
@@ -65,6 +99,7 @@ for i in range(10):
 			continue
 
 		corpus[str(i)] = page_data
+		media_ctr += 1
 
 		#get the links and put them into the queue
 		try:
@@ -81,11 +116,11 @@ for i in range(10):
 		#continue
 
 
-# json_data = json.dumps(corpus)
-# f = open('corpus.json', 'w')
-# f.write(json_data)
+json_data = json.dumps(corpus)
+f = open('corpus.json', 'w')
+f.write(json_data)
 
-corpus.close()
+#corpus.close()
 
 #links that failed
 #ft = open('failed_t.txt', 'w')
@@ -96,10 +131,16 @@ corpus.close()
 #fm.close()
 
 #useful information
-print "links examined:"
+print "loop iterations:"
 print (ext_count)
+print "links examined"
+print link_count
 print "items in corpus"
 print (len(corpus.keys()))
+print "tropes in corpus"
+print trope_ctr
+print "media in corpus"
+print media_ctr
 print "duplicate tropes detected:"
 print (len(examined_tropes))
 print "duplicate media detected:"

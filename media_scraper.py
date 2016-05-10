@@ -6,7 +6,7 @@ import pprint
 
 def run_media_scraper(my_url):
 
-    #try:
+    try:
         url = my_url
         html_doc = requests.get(url)
         soup = BeautifulSoup(html_doc.content, 'lxml')
@@ -47,6 +47,8 @@ def run_media_scraper(my_url):
         page_data["tropes"] = trope_map
 
         return page_data
+    except:
+        return None
 
 if __name__=="__main__":
     page_data = run_media_scraper('http://tvtropes.org/pmwiki/pmwiki.php/Literature/HarryPotter')    # Use the following three lines to preview output with prettyprint
