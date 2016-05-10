@@ -16,21 +16,27 @@
 					"index_options": "offsets"
 				},
 				"links":{
-					"properties": {
+					"type":"object",
+					"properties":{
 						"genre":{
-							"properties":{
-								"title-of-work":{
-									"type" : "string"
-								}
-							}
-							
+							"type":"string"
+						},
+						"titleofwork":{
+							"type":"string"
+						},
+						"link":{
+							"type":"string"
 						}
-					}
+					}		
 				},
 				"tropes":{
-					"properties": {
-						"tropename":{
-							"type" : "string"
+					"type":"object",
+					"properties":{
+						"trope":{
+							"type":"string"
+						},
+						"link":{
+							"type":"string"
 						}
 					}
 				}
