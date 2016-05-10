@@ -39,6 +39,12 @@
 							"type":"string"
 						}
 					}
+				},
+				"imagelink":{
+					"type":"string"
+				},
+				"mediatype":{
+					"type":"string"
 				}
 			}
 		}

@@ -20,8 +20,8 @@ def format_action(id, value):
 
 def buildindex():
     ts_index = es.indices.create(index = "tropes_and_media", body = body)
-    '''items = json.load(open('corpus.json'))'''
-    items = json.load(open('corpus_test.json'))
+    items = json.load(open('corpus.json'))
+    #items = json.load(open('corpus_test.json'))
     '''items = json.load(open('corpus_0.json'))'''
 
     actions = []
@@ -31,25 +31,53 @@ def buildindex():
     es.indices.refresh(index='tropes_and_media')
 
 ##QUERY METHODS
-def exsearch(query):
+'''query by disjunctive'''
+def q_mw(dtype, query):
     res = es.search(index='tropes_and_media', doc_type='item', body={"query": {
     "filtered": {
-       "query": {"match_all": {}},
+       "query": {
+           "multi_match":{
+               "query":query,
+               "type":"best_fields",
+               "fields":["title", "text"],
+               "operator": "and"
+           }
+       },
        "filter": {
-          "and": [
-            {"term": {"links.genre": query}}
-          ]
+            "term": {"doctype": dtype}
        }
     }
   }
 })
-    #{'bool':{'should':[{'multi_match':{'query':query,'fields':['links.genre']}}]}}})
     lst = []
     print res['hits']['hits']
+    return res
+    #print res['hits']['hits'][0]['_source']['links'][0]['titleofwork']
+
+'''query by conjunctive'''
+def q_phr(dtype, phrase):
+    res = es.search(index='tropes_and_media', doc_type='item', body={"query":{
+    "filtered":{
+        "query":{
+            "multi_match":{
+                "query":phrase,
+                "type": "phrase",
+                "fields":["title"]
+            }
+        },
+        "filter":{
+            "term":{
+                "doctype": dtype
+            }
+        }
+    }}
+})
+    print res['hits']['hits']
+    return res
 
 #buildindex()
-u = unicode('Comic Books', "utf-8")
-exsearch(u)
+#q_mw('trope', 'Weaksauce Weakness')
+#q_phr('trope', 'Weaksauce Weakness')
 #print(es.count(index='tropes_and_media'))
 #print(es.indices.get_mapping("tropes_and_media"))
 
