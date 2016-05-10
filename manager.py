@@ -3,23 +3,26 @@ from trope_scraper import run_trope_scraper
 from media_scraper import run_media_scraper
 import pprint
 import json
+import shelve
 
 
-    
+
 pp = pprint.PrettyPrinter(indent=4)
 url = 'http://tvtropes.org/pmwiki/pmwiki.php/Main/SignificantGreenEyedRedhead'
 
-corpus = {}
+# corpus = {}
 queue = [ ['t', url] ]  #queue of urls to examine
-mediatypeRE = re.compile
 
+corpus = shelve.open("corpusfile"
+					 )
 ext_count = 0
-for i in range(1000):
+for i in range(10):
 	ext_count += 1
 	url = queue.pop(0)
 
 	#try:
 	if url[0] == 't':
+		print("Trope")
 		#insert scraper data into the corpus
 		page_data = run_trope_scraper(url[1])
 
@@ -38,6 +41,7 @@ for i in range(1000):
 			continue
 
 	else:
+		print("Media")
 		#insert scraper data into git the corpus
 		page_data = run_media_scraper(url[1])
 
@@ -58,11 +62,14 @@ for i in range(1000):
 		#continue
 
 
-json_data = json.dumps(corpus)
-f = open('corpus.json', 'w')
-f.write(json_data)
+# json_data = json.dumps(corpus)
+# f = open('corpus.json', 'w')
+# f.write(json_data)
+
+corpus.close()
 
 print (ext_count)
 print (len(corpus.keys()))
 #pp.pprint(corpus)
 #pp.pprint(page_data)
+

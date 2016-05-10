@@ -26,7 +26,7 @@ def run_media_scraper(my_url):
         #indicating the type of media of this link
         page_data["mediatype"] = re.search(r"(?<=http://tvtropes.org/pmwiki/pmwiki.php/)[A-Za-z]+", url).group(0)
 
-        #creates list of categories
+        #creates list of categories"
         category_list = []
 
         trope_map = {}
