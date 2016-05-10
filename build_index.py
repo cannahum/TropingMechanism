@@ -37,8 +37,7 @@ def exsearch(query):
        "query": {"match_all": {}},
        "filter": {
           "and": [
-            {"term": {"links.genre": query}},
-            {"term": {"links.titleofwork":"Justice League"}}
+            {"term": {"links.genre": query}}
           ]
        }
     }
@@ -48,7 +47,7 @@ def exsearch(query):
     lst = []
     print res['hits']['hits']
 
-##buildindex()
+#buildindex()
 u = unicode('Comic Books', "utf-8")
 exsearch(u)
 #print(es.count(index='tropes_and_media'))

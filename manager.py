@@ -39,7 +39,6 @@ media_ctr = 0
 i = 0
 while i < CTR: 
 	i += 1
-#for i in range(1000):
 	ext_count += 1
 	url = queue.pop(0)
 
@@ -70,11 +69,11 @@ while i < CTR:
 		try:
 			#get the links and put them into the queue
 			#don't put anything in the queue that we've seen already
-			links = page_data["links"][unicode('Literature', "utf-8")]
-			for key in links:
-				if links[key] not in examined_media:
-					queue.append(['m', links[key]])
-					examined_media.append(links[key])
+			links = page_data["links"]
+			for single_dict in links:
+				if single_dict["link"] not in examined_media:
+					queue.append(['m', single_dict["link"]])
+					examined_media.append(single_dict["link"])
 		except:
 			exception_ctr_t += 1
 			continue
@@ -104,10 +103,10 @@ while i < CTR:
 		#get the links and put them into the queue
 		try:
 			links = page_data[unicode('tropes', "utf-8")]
-			for key in links:
-				if links[key] not in examined_tropes:
-					queue.append(['t', links[key]])
-					examined_tropes.append(links[key])
+			for single_dict in links:
+				if single_dict["link"] not in examined_tropes:
+					queue.append(['t', single_dict["link"]])
+					examined_tropes.append(single_dict["link"])
 		except:
 			exception_ctr_m += 1
 			continue

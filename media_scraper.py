@@ -17,6 +17,13 @@ def run_media_scraper(my_url):
         #article text
         page_data["text"] = soup.find("div", class_="page-content").get_text()
 
+        #image link
+        try:
+            image_link = soup.find("img", class_="embeddedimage")['src']
+            page_data["imagelink"] = image_link
+        except:
+            page_data["imagelink"] = ""
+
         #title string
         page_data["title"] = soup.title.string
 
@@ -29,7 +36,7 @@ def run_media_scraper(my_url):
         #creates list of categories"
         category_list = []
 
-        trope_map = {}
+        trope_list = []
 
         for tropes in soup.find_all("a", class_="twikilink", ):
             href = tropes.get('href')
@@ -42,9 +49,9 @@ def run_media_scraper(my_url):
             if (clean).startswith('http://tvtropes.org') and not (clean).startswith('http://tvtropes.org/pmwiki/pmwiki.php/Main'):
                 continue
 
-            trope_map[tropes.string.replace(".", "")] = clean
+            trope_list.append({"trope": tropes.string.replace(".", ""), "link": clean})
 
-        page_data["tropes"] = trope_map
+        page_data["tropes"] = trope_list
 
         return page_data
     except:
