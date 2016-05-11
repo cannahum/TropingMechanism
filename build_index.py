@@ -63,7 +63,6 @@ def q_mw(dtype, query):
 '''query by conjunctive, no document type'''
 def q_phr_query(phrase):
     res = es.search(index='tropes_and_media', doc_type='item', body={'query':{'multi_match':{'query': phrase, 'type': 'phrase', 'fields':['title']}}})
-    print res['hits']['hits']
     return res
 
 '''query by conjunctive'''
@@ -84,13 +83,12 @@ def q_phr(dtype, phrase):
         }
     }}
 })
-    print res['hits']['hits']
     return res
 
 #buildindex()
-q_mw_query('Harry Potter')
-#q_mw('trope', 'Weaksauce Weakness')
-#q_phr_query('Weaksauce Weakness')
+#q_mw_query('pretty girls')
+q_mw('trope', 'pretty')
+#q_phr_query('pretty girls')
 #print(es.count(index='tropes_and_media'))
 #print(es.indices.get_mapping("tropes_and_media"))
 
