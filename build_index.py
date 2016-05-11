@@ -31,6 +31,12 @@ def buildindex():
     es.indices.refresh(index='tropes_and_media')
 
 ##QUERY METHODS
+'''query by disjunctive no document type'''
+def q_mw_query(query):
+    res = es.search(index='tropes_and_media', doc_type='item', body={'query':{'multi_match':{'query':query, 'type': 'best_fields','fields': ['title', 'text'],'operator':'and'}}})
+    res['hits']['hits']
+    return res
+
 '''query by disjunctive'''
 def q_mw(dtype, query):
     res = es.search(index='tropes_and_media', doc_type='item', body={"query": {
@@ -49,10 +55,16 @@ def q_mw(dtype, query):
     }
   }
 })
-    lst = []
     print res['hits']['hits']
     return res
-    #print res['hits']['hits'][0]['_source']['links'][0]['titleofwork']
+    #print res['hits']['hits'][i]
+    #['_source']['links'][0]['titleofwork']
+
+'''query by conjunctive, no document type'''
+def q_phr_query(phrase):
+    res = es.search(index='tropes_and_media', doc_type='item', body={'query':{'multi_match':{'query': phrase, 'type': 'phrase', 'fields':['title']}}})
+    print res['hits']['hits']
+    return res
 
 '''query by conjunctive'''
 def q_phr(dtype, phrase):
@@ -76,8 +88,9 @@ def q_phr(dtype, phrase):
     return res
 
 #buildindex()
+q_mw_query('Harry Potter')
 #q_mw('trope', 'Weaksauce Weakness')
-#q_phr('trope', 'Weaksauce Weakness')
+#q_phr_query('Weaksauce Weakness')
 #print(es.count(index='tropes_and_media'))
 #print(es.indices.get_mapping("tropes_and_media"))
 
