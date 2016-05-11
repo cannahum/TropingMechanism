@@ -4,6 +4,7 @@ Start-Up Instructions
 
 Purpose of each code module (file): should briefly describe the purpose of each code module (file) 
 - build_index.py
+    Builds the index for ElasticSearch, and query functions for ElasticSearch. Requires Mapping.json
 - manager.py
 	Creates the corpus in a JSON file. Does this by starting at a hard-coded URL and examining the links it points to, which it adds to a queue. It pops from the queue and calls either the trope or media scraper depending on what kind of page it is (this is required as both pages have different layouts). It detects and avoids duplicate links, and balances the number of tropes and media documents put into the corpus.
 - media_scraper.py
